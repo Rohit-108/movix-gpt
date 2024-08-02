@@ -34,8 +34,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
   },
   "devDependencies": {
     "tailwindcss": "^3.4.7"
+=======
+>>>>>>> 8f6688cefe51d2bf75e7bb2671177b2308c18a8e
   }
 }
