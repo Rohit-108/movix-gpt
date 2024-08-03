@@ -1,16 +1,20 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
 import { checkvalidData } from '../utils/validate';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile
+} from "firebase/auth";
 import {auth} from "../utils/firebase"
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
   const [isSignInForm, setIsSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate= useNavigate();
 
   const email = useRef(null);
   const password = useRef(null);
+  const name = useRef(null); 
 
   const handleButtonClick = () => {
     //validate data
@@ -27,7 +31,18 @@ const Login = () => {
        .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    updateProfile(user, {
+      displayName: name.current ? name.current.value : "", photoURL: "https://example.com/jane-q-user/profile.jpg"
+    }).then(() => {
+      // Profile updated!
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      setErrorMessage(error.message)
+      // ...
+    });
     console.log(user)
+    navigate("/browse")
     // ...
   })
   .catch((error) => {
@@ -45,6 +60,8 @@ const Login = () => {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
+    console.log(user)
+    navigate("/browse")
     // ...
   })
   .catch((error) => {
@@ -74,7 +91,7 @@ const Login = () => {
       <form  className='w-3/12  absolute  p-12 bg-black    items-center justify-center text-white rounded-md bg-opacity-80'>
       <h1 className='font-bold text-3xl  mb-[10px]'>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
       {!isSignInForm && (
-        <input type='text' placeholder='Full Name' className=' w-full p-4 my-2 rounded-md bg-gray-700 text-white  ' />
+        <input ref={name} type='text' placeholder='Full Name' className=' w-full p-4 my-2 rounded-md bg-gray-700 text-white  ' />
         
       )}
       
