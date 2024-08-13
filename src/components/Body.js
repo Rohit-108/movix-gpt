@@ -58,4 +58,4 @@ const approuter = createBrowserRouter([
 }
 ]);
 
-export default Body;
+export default Body
