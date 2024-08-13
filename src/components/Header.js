@@ -8,6 +8,7 @@ const Header = () => {
 
   const navigate = useNavigate()
   const user = useSelector((store=>store.user))
+  
   const handleSignOut = () => {
     signOut(auth).then(() => {
 

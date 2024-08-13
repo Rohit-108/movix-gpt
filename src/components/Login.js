@@ -16,65 +16,51 @@ const Login = () => {
   const password = useRef(null);
   const name = useRef(null); 
 
-  const handleButtonClick = () => {
-    //validate data
-   
+  const handleButtonClick = async (e) => {
+    e.preventDefault();
+
     const message = checkvalidData(email.current.value, password.current.value);
     setErrorMessage(message);
+  
+    if (message) return;
+  
+      if (!isSignInForm) {
+        //Sign Up Logic
+        createUserWithEmailAndPassword(
+          auth, 
+          email.current.value, 
+          password.current.value
+        )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          navigate("/browse");
+        })
+        .catch ((error) => {
+          const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + "-" + errorMessage)
+        });
 
-    if(message) return;
-
-    //signup and sign logic
-
-    if(!isSignInForm){
-      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-       .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    updateProfile(user, {
-      displayName: name.current ? name.current.value : "", photoURL: "https://example.com/jane-q-user/profile.jpg"
-    }).then(() => {
-      // Profile updated!
-      // ...
-    }).catch((error) => {
-      // An error occurred
-      setErrorMessage(error.message)
-      // ...
+      } else {
+        //SignIn Logic
+        signInWithEmailAndPassword(
+          auth, 
+          email.current.value, 
+          password.current.value
+        )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          navigate("/browse");
+        })
+     .catch((error) => {
+      const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode + "-" + errorMessage)
     });
-    console.log(user)
-    navigate("/browse")
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    setErrorMessage(errorCode + "-" + errorMessage)
-    // ..
-  });
-
-
-    }
-    else{
-      // signin logic
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user)
-    navigate("/browse")
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    setErrorMessage(errorCode + "-" + errorMessage)
-  });
-
-    }
-
-   
-
   }
+}
+  
+  
 
   const toggleSignInForm = () => {
     setIsSignForm(!isSignInForm)
@@ -104,6 +90,7 @@ const Login = () => {
 
     </div>
   )
+
 }
 
 export default Login
