@@ -1,10 +1,14 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
+
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
   const user = useSelector((store=>store.user))
@@ -12,7 +16,6 @@ const Header = () => {
   const handleSignOut = () => {
     signOut(auth).then(() => {
 
-      navigate("/")
       // Sign-out successful.
     }).catch((error) => {
       navigate("/error")
@@ -20,6 +23,27 @@ const Header = () => {
     });
     
   }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURl } = user;
+        dispatch(
+          addUser({ 
+            uid, 
+            email, 
+            displayName, 
+            photoURl 
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/")
+      }
+    });
+  }, []);
+
 
 
 
