@@ -6,12 +6,11 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import {auth} from "../utils/firebase"
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { USER_AVTAR } from '../utils/constant';
 
 const Login = () => {
-
   const [isSignInForm, setIsSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-
   const dispatch = useDispatch()
 
   const email = useRef(null);
@@ -23,7 +22,6 @@ const Login = () => {
 
     const message = checkvalidData(email.current.value, password.current.value);
     setErrorMessage(message);
-  
     if (message) return;
   
       if (!isSignInForm) {
@@ -36,7 +34,7 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           updateProfile(user, {
-            displayName:name.current.value, PhotoUrl:"https://avatars.githubusercontent.com/u/75141795?v=4"
+            displayName:name.current.value, PhotoUrl:USER_AVTAR,
           })
            .then(() => {
             const { uid, email, displayName, PhotoUrl} = auth.currentUser;

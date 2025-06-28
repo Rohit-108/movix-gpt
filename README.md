@@ -12,8 +12,12 @@
 - Deploying our App to production
 - Create Signup User Account
 - Implemented Sign UP User Api
-- Created React Store With User Slice
-- 
+- Created Redux Store With User Slice
+- Implemented SignOut
+- Update profile
+- BugFix: SignUp user displayName and profile picture update
+- BugFix: If the  user is not logged in Redirect/ browse to login page and vice-versa
+- Unsubscribed to the OnAuthStageChange
 
 
 
