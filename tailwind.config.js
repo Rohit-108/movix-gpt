@@ -4,9 +4,17 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      customScrollbar: {
+        '::-webkit-scrollbar': {
+          width: '5px',
+        },
+        '::-webkit-scrollbar-thumb': {
+          backgroundColor: '#a0a0a0',
+        },
+      },
+    },
   },
   plugins: [
-    require('tailwind-scrollbar-hide')
   ],
 }
