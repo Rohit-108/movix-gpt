@@ -1,4 +1,4 @@
-import React from 'react'
+import resumeImage from '../assests/images/video_resume.png';
 
 const VideoTitle = ({ title, overview }) => {
     return (
@@ -6,7 +6,9 @@ const VideoTitle = ({ title, overview }) => {
             <h1 className='text-5xl font-bold'>{title}</h1>
             <p className='py-6 text-lg w-1/4'>{overview}</p>
             <div>
-                <button className=' text-xl  text-black p-3.5  px-8  rounded-lg bg-white hover:bg-opacity-80'>▶Play</button>
+                <img className='w-4 md:w-3 xl:w-5' src={require("../assests/images/video_resume.png")} alt='resumeImage'></img>
+
+                <button className=' text-xl  text-black p-3.5  px-8  rounded-lg bg-white hover:bg-opacity-80'>Play</button>
                 <button className='mx-2 bg-gray-500 text-xl  text-white p-3.5  px-8 bg-opacity-50 rounded-lg '>More Info</button>
             </div>
         </div>
