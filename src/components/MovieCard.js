@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IMG_CDN_URL } from '../utils/constant';
 import { BsPlayCircle } from "react-icons/bs";
+import ShimmerMovieCard from './Shimmer';
 
 const MovieCard = ({ movie }) => {
 
@@ -9,6 +10,8 @@ const MovieCard = ({ movie }) => {
   const { poster_path, original_title, overview, vote_average } = movie;
 
   return (
+
+
     <div
       className="relative w-48 pr-4"
       onMouseEnter={() => setActive(true)}

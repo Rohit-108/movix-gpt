@@ -12,6 +12,7 @@ import { USER_AVTAR } from '../utils/constant';
 const Login = () => {
   const [isSignInForm, setIsSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch()
 
   const email = useRef(null);
@@ -85,6 +86,12 @@ const Login = () => {
     setIsSignForm(!isSignInForm)
   }
 
+
+  const handlePassword = () => {
+    setShowPassword(!showPassword)
+  }
+
+
   return (
     <div>
       <Header />
@@ -101,7 +108,9 @@ const Login = () => {
           )}
 
           <input ref={email} type='email' placeholder='Email or mobile number' className=' w-full p-4 my-2 rounded-md bg-gray-700 text-white  ' />
-          <input ref={password} type='password' placeholder='Password' className='p-4 my-2 w-full rounded-md bg-gray-700 text-white ' />
+          <input ref={password} type={showPassword ? 'text' : 'password'} placeholder='Password' className='p-4 my-2 w-full rounded-md bg-gray-700 text-white ' required />
+          <input type='checkbox' className='mr-2' onChange={handlePassword} />
+          <span className='text-sm'>Show Password</span>
           <p className='text-red-500 text-lg font-bold p-2'>{errorMessage}</p>
           <button className='p-2 my-2 w-full text-white  bg-red-700 rounded-md font-bold' onClick={handleButtonClick}>{isSignInForm ? "Sign In" : "Sign Up"}</button>
           <p className='py-4 cursor-pointer' onClick={toggleSignInForm}>{isSignInForm ? "New to Netflix? Sign Up Now" : "Already registered? Sign In Now."}</p>
